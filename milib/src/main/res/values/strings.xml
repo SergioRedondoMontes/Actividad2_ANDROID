@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">milib</string>
+    <string name="btnLogin">LOGIN</string>
+    <string name="btnRegister">REGISTER</string>
+    <string name="lblEmail">EMAIL</string>
+    <string name="lblPass">PASSWORD</string>
+    <string name="btnSave">SAVE</string>
+</resources>
