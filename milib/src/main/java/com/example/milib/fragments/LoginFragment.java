@@ -1,16 +1,16 @@
 package com.example.milib.fragments;
 
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.milib.R;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +18,8 @@ import com.example.milib.R;
 public class LoginFragment extends Fragment {
 
     Button btnRegister,btnLogin;
+    TextView lblEmail,lblPass;
+    EditText txtEmail,txtPass;
     LoginFragmentEvents events;
     public LoginFragmentListener listener;
 
@@ -37,10 +39,22 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        btnRegister =(Button) v.findViewById(R.id.btnRegister);
-        btnLogin = (Button)v.findViewById(R.id.btnLogin);
+
         events=new LoginFragmentEvents(this);
+
+        lblEmail = v.findViewById(R.id.lblEmailL);
+        lblEmail.setText(R.string.lblEmail);
+        lblPass = v.findViewById(R.id.lblPassL);
+        lblPass.setText(R.string.lblPass);
+
+        txtEmail = v.findViewById(R.id.txtEmailL);
+        txtPass = v.findViewById(R.id.txtPassL);
+
+        btnRegister = v.findViewById(R.id.btnRegister);
+        btnRegister.setText(R.string.btnRegister);
         btnRegister.setOnClickListener(events);
+        btnLogin = v.findViewById(R.id.btnLogin);
+        btnLogin.setText(R.string.btnLogin);
         btnLogin.setOnClickListener(events);
 
         return v;

@@ -5,4 +5,8 @@
     <string name="lblEmail">EMAIL</string>
     <string name="lblPass">PASSWORD</string>
     <string name="btnSave">SAVE</string>
+    <string name="btnBack">BACK</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
