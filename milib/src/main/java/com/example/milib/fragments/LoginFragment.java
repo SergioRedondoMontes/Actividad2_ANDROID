@@ -3,6 +3,7 @@ package com.example.milib.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,11 @@ class LoginFragmentEvents implements View.OnClickListener{
             if(this.loginFragment.listener!=null)
                 this.loginFragment.listener.OnRegisteredClicked();
         }
-        else if(view.getId() == R.id.btnLogin){
-            if(this.loginFragment.listener!=null)
+        else if(view.getId() == R.id.btnLogin) {
+            if (this.loginFragment.txtEmail.getText().toString().equals(DataHolder.instance.email) &&
+                    this.loginFragment.txtPass.getText().toString().equals(DataHolder.instance.pass)) {
                 this.loginFragment.listener.OnLoginClicked();
+            }
         }
     }
 }

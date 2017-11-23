@@ -77,12 +77,8 @@ class RegisterFragmentEvents implements View.OnClickListener{
             }
         }
         else if(view.getId() == R.id.btnSave){
-
             if(this.registerFragment.listener!=null){
-                if (this.registerFragment.txtEmail.equals(DataHolder.instance.email) &&
-                        this.registerFragment.txtPass.equals(DataHolder.instance.pass)){
                     this.registerFragment.listener.OnSaveClicked();
-                }
             }
         }
 
