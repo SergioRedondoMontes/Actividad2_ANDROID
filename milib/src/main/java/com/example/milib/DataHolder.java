@@ -1,4 +1,4 @@
-package com.example.milib.fragments;
+package com.example.milib;
 
 /**
  * Created by sergioredondo on 21/11/17.
