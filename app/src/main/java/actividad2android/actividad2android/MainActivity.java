@@ -10,6 +10,7 @@ import com.example.milib.fragments.LoginFragment;
 import com.example.milib.fragments.LoginFragmentListener;
 import com.example.milib.fragments.RegisterFragment;
 import com.example.milib.fragments.RegisterFragmentListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 import static android.content.ContentValues.TAG;
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     public RegisterFragment registerFragment;
     public InicioFragment inicioFragment;
     MainActivityEvents mainActivityEvents;
+    FireBaseAdmin fireBaseAdmin;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +41,12 @@ public class MainActivity extends AppCompatActivity {
         transition.hide(inicioFragment);
         transition.show(loginFragment);
         transition.commit();
+
+        fireBaseAdmin=new FireBaseAdmin(this);
+        fireBaseAdmin.setListener(mainActivityEvents);
     }
 }
-class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListener{
+class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListener,FireBaseAdmin.FireBaseAdminListener{
     MainActivity mainActivity;
 
     public MainActivityEvents(MainActivity mainActivity){
@@ -49,21 +55,16 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
 
     @Override
     public void OnRegisteredClicked() {
-        FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
-        transition.show(this.mainActivity.registerFragment);
-        transition.hide(this.mainActivity.loginFragment);
-        transition.hide(this.mainActivity.inicioFragment);
-        transition.commit();
+        mainActivity.fireBaseAdmin.signIn(mainActivity.loginFragment.txtEmail.getText().toString(),
+                mainActivity.loginFragment.txtPass.getText().toString());
 
     }
 
     @Override
     public void OnLoginClicked() {
-        FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
-        transition.hide(this.mainActivity.registerFragment);
-        transition.hide(this.mainActivity.loginFragment);
-        transition.show(this.mainActivity.inicioFragment);
-        transition.commit();
+        mainActivity.fireBaseAdmin.loginWithEmailPass(mainActivity.loginFragment.txtEmail.getText().toString(),
+                mainActivity.loginFragment.txtPass.getText().toString());
+
     }
 
     @Override
@@ -79,4 +80,29 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     public void OnSaveClicked() {
 
     }
+
+    @Override
+    public void fireBaseAdminUserConnected(boolean blconnected) {
+        System.out.println("-----------------------------------"+ blconnected);
+        if (blconnected){
+            FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
+            transition.hide(this.mainActivity.registerFragment);
+            transition.hide(this.mainActivity.loginFragment);
+            transition.show(this.mainActivity.inicioFragment);
+            transition.commit();
+        }
+    }
+
+    @Override
+    public void fireBaseAdminUserRegister(boolean blconnected) {
+        System.out.println("-----------------------------------"+ blconnected);
+        if (blconnected) {
+            FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
+            transition.show(this.mainActivity.registerFragment);
+            transition.hide(this.mainActivity.loginFragment);
+            transition.hide(this.mainActivity.inicioFragment);
+            transition.commit();
+        }
+    }
+
 }

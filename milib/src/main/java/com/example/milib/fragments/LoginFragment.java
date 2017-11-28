@@ -3,6 +3,7 @@ package com.example.milib.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class LoginFragment extends Fragment {
 
     Button btnRegister,btnLogin;
     TextView lblEmail,lblPass;
-    EditText txtEmail,txtPass;
+    public EditText txtEmail,txtPass;
     LoginFragmentEvents events;
     public LoginFragmentListener listener;
 
@@ -73,15 +74,21 @@ class LoginFragmentEvents implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        System.out.println("-----------------------------------ONCLICK");
         if(view.getId() == R.id.btnRegister){
+            System.out.println("-----------------------------------btnrEGISTER");
             if(this.loginFragment.listener!=null)
+                System.out.println("-----------------------------------btnrEGISTER2 not null");
                 this.loginFragment.listener.OnRegisteredClicked();
         }
         else if(view.getId() == R.id.btnLogin) {
-            if (this.loginFragment.txtEmail.getText().toString().equals(DataHolder.instance.email) &&
-                    this.loginFragment.txtPass.getText().toString().equals(DataHolder.instance.pass)) {
+            System.out.println("-----------------------------------btnlogin");
+            //if (this.loginFragment.txtEmail.getText().toString().equals(DataHolder.instance.email) &&
+              //      this.loginFragment.txtPass.getText().toString().equals(DataHolder.instance.pass)) {
+            if(this.loginFragment.listener!=null)
+                System.out.println("-----------------------------------btnlogin2 NOT NULL");
                 this.loginFragment.listener.OnLoginClicked();
-            }
+            //}
         }
     }
 }
