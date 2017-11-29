@@ -55,14 +55,16 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
 
     @Override
     public void OnRegisteredClicked() {
-        mainActivity.fireBaseAdmin.signIn(mainActivity.loginFragment.txtEmail.getText().toString(),
-                mainActivity.loginFragment.txtPass.getText().toString());
-
+        FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
+        transition.show(this.mainActivity.registerFragment);
+        transition.hide(this.mainActivity.inicioFragment);
+        transition.hide(this.mainActivity.loginFragment);
+        transition.commit();
     }
 
     @Override
     public void OnLoginClicked() {
-        mainActivity.fireBaseAdmin.loginWithEmailPass(mainActivity.loginFragment.txtEmail.getText().toString(),
+        mainActivity.fireBaseAdmin.signIn(mainActivity.loginFragment.txtEmail.getText().toString(),
                 mainActivity.loginFragment.txtPass.getText().toString());
 
     }
@@ -78,7 +80,9 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
 
     @Override
     public void OnSaveClicked() {
-
+        System.out.println("-------------Intentando REGISTRAR");
+        mainActivity.fireBaseAdmin.loginWithEmailPass(mainActivity.registerFragment.txtEmail.getText().toString(),
+                mainActivity.registerFragment.txtPass.getText().toString());
     }
 
     @Override
@@ -98,9 +102,9 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
         System.out.println("-----------------------------------"+ blconnected);
         if (blconnected) {
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
-            transition.show(this.mainActivity.registerFragment);
+            transition.hide(this.mainActivity.registerFragment);
             transition.hide(this.mainActivity.loginFragment);
-            transition.hide(this.mainActivity.inicioFragment);
+            transition.show(this.mainActivity.inicioFragment);
             transition.commit();
         }
     }

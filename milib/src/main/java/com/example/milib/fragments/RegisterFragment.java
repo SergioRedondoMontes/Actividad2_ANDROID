@@ -19,7 +19,7 @@ public class RegisterFragment extends Fragment {
 
     Button btnSave,btnBack;
     TextView lblEmail,lblPass;
-    EditText txtEmail,txtPass;
+    public EditText txtEmail,txtPass;
     RegisterFragmentEvents events;
     public RegisterFragmentListener listener;
 

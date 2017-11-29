@@ -59,7 +59,7 @@ public class FireBaseAdmin {
 
     public void signIn(String email, String password) {
 
-
+        System.out.println(password+"-----------------------------------"+ email);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
