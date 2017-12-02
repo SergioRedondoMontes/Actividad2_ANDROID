@@ -11,6 +11,7 @@ import com.example.milib.fragments.LoginFragmentListener;
 import com.example.milib.fragments.RegisterFragment;
 import com.example.milib.fragments.RegisterFragmentListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     public RegisterFragment registerFragment;
     public InicioFragment inicioFragment;
     MainActivityEvents mainActivityEvents;
-    FireBaseAdmin fireBaseAdmin;
-    private FirebaseAuth mAuth;
+    //FireBaseAdmin fireBaseAdmin;
+    //private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         transition.show(loginFragment);
         transition.commit();
 
-        fireBaseAdmin=new FireBaseAdmin(this);
-        fireBaseAdmin.setListener(mainActivityEvents);
+        DataHolder.instance.fireBaseAdmin=new FireBaseAdmin();
+        DataHolder.instance.fireBaseAdmin.setListener(mainActivityEvents);
     }
 }
 class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListener,FireBaseAdmin.FireBaseAdminListener{
@@ -64,8 +65,8 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
 
     @Override
     public void OnLoginClicked() {
-        mainActivity.fireBaseAdmin.signIn(mainActivity.loginFragment.txtEmail.getText().toString(),
-                mainActivity.loginFragment.txtPass.getText().toString());
+        DataHolder.instance.fireBaseAdmin.signIn(mainActivity.loginFragment.txtEmail.getText().toString(),
+                mainActivity.loginFragment.txtPass.getText().toString(),mainActivity);
 
     }
 
@@ -81,14 +82,15 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     @Override
     public void OnSaveClicked() {
         System.out.println("-------------Intentando REGISTRAR");
-        mainActivity.fireBaseAdmin.loginWithEmailPass(mainActivity.registerFragment.txtEmail.getText().toString(),
-                mainActivity.registerFragment.txtPass.getText().toString());
+        DataHolder.instance.fireBaseAdmin.loginWithEmailPass(mainActivity.registerFragment.txtEmail.getText().toString(),
+                mainActivity.registerFragment.txtPass.getText().toString(),mainActivity);
     }
 
     @Override
     public void fireBaseAdminUserConnected(boolean blconnected) {
         System.out.println("-----------------------------------"+ blconnected);
         if (blconnected){
+            DataHolder.instance.fireBaseAdmin.descargarObservarRamaBBDD("user");
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
             transition.hide(this.mainActivity.registerFragment);
             transition.hide(this.mainActivity.loginFragment);
@@ -107,6 +109,15 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
             transition.show(this.mainActivity.inicioFragment);
             transition.commit();
         }
+    }
+
+    @Override
+    public void fireBaseDataRecive(String rama, DataSnapshot dataSnapshot) {
+            if (rama.equals("users/sergio")){
+                User user=dataSnapshot.getValue(User.class);
+            }else if(rama.equals("users")){
+                Users users = dataSnapshot.getValue(Users.class);
+            }
     }
 
 }

@@ -2,12 +2,18 @@ package actividad2android.actividad2android;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by sergioredondo on 24/11/17.
@@ -16,24 +22,31 @@ import com.google.firebase.auth.FirebaseUser;
 public class FireBaseAdmin {
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
-    Activity activity;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    //Activity activity;
     FireBaseAdminListener listener;
 
     public void setListener(FireBaseAdminListener listener) {
         this.listener = listener;
     }
 
-    public FireBaseAdmin(Activity activity){
+    public FireBaseAdmin(){
         mAuth=FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        this.activity=activity;
+        //this.activity=activity;
+    }
+
+    public void initData(){
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
     }
 
 
-    public void loginWithEmailPass(final String email, final String password){
+    public void loginWithEmailPass(final String email, final String password,Activity activity){
         System.out.println(password+"-----------------------------------"+ email);
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(FireBaseAdmin.this.activity, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -57,7 +70,7 @@ public class FireBaseAdmin {
     }
 
 
-    public void signIn(String email, String password) {
+    public void signIn(String email, String password,Activity activity) {
 
         System.out.println(password+"-----------------------------------"+ email);
         mAuth.signInWithEmailAndPassword(email, password)
@@ -80,10 +93,33 @@ public class FireBaseAdmin {
     }
 
 
+    public void descargarObservarRamaBBDD(final String rama){
+        // Read from the database
+        DatabaseReference refTemp = myRef.child(rama);
+        refTemp.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                //String value = dataSnapshot.getValue(String.class);
+                listener.fireBaseDataRecive(rama,dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
+    }
+
+
     public interface FireBaseAdminListener{
 
         public void fireBaseAdminUserConnected(boolean blconnected);
         public void fireBaseAdminUserRegister(boolean blconnected);
+        public void fireBaseDataRecive( String rama,DataSnapshot dataSnapshot);
 
     }
 }
