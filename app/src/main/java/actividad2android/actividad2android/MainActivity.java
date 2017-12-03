@@ -1,5 +1,6 @@
 package actividad2android.actividad2android;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public LoginFragment loginFragment;
     public RegisterFragment registerFragment;
-    public InicioFragment inicioFragment;
+//    public InicioFragment inicioFragment;
     MainActivityEvents mainActivityEvents;
     //FireBaseAdmin fireBaseAdmin;
     //private FirebaseAuth mAuth;
@@ -35,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
         loginFragment.setListener(mainActivityEvents);
         registerFragment = (RegisterFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
         registerFragment.setListener(mainActivityEvents);
-        inicioFragment = (InicioFragment)getSupportFragmentManager().findFragmentById(R.id.fragment3);
+      //  inicioFragment = (InicioFragment)getSupportFragmentManager().findFragmentById(R.id.fragment3);
 
         FragmentTransaction transition = getSupportFragmentManager().beginTransaction();
         transition.hide(registerFragment);
-        transition.hide(inicioFragment);
+       // transition.hide(inicioFragment);
         transition.show(loginFragment);
         transition.commit();
 
@@ -58,7 +59,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     public void OnRegisteredClicked() {
         FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
         transition.show(this.mainActivity.registerFragment);
-        transition.hide(this.mainActivity.inicioFragment);
+       // transition.hide(this.mainActivity.inicioFragment);
         transition.hide(this.mainActivity.loginFragment);
         transition.commit();
     }
@@ -74,7 +75,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     public void OnBackClicked() {
         FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
         transition.hide(this.mainActivity.registerFragment);
-        transition.hide(this.mainActivity.inicioFragment);
+       // transition.hide(this.mainActivity.inicioFragment);
         transition.show(this.mainActivity.loginFragment);
         transition.commit();
     }
@@ -90,12 +91,16 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     public void fireBaseAdminUserConnected(boolean blconnected) {
         System.out.println("-----------------------------------"+ blconnected);
         if (blconnected){
-            DataHolder.instance.fireBaseAdmin.descargarObservarRamaBBDD("user");
+            Intent intent = new Intent(mainActivity,GeneralActivity.class);
+            mainActivity.startActivity(intent);
+            mainActivity.finish();
+
+           /* DataHolder.instance.fireBaseAdmin.descargarObservarRamaBBDD("user");
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
             transition.hide(this.mainActivity.registerFragment);
             transition.hide(this.mainActivity.loginFragment);
             transition.show(this.mainActivity.inicioFragment);
-            transition.commit();
+            transition.commit();*/
         }
     }
 
@@ -106,7 +111,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
             transition.hide(this.mainActivity.registerFragment);
             transition.hide(this.mainActivity.loginFragment);
-            transition.show(this.mainActivity.inicioFragment);
+           // transition.show(this.mainActivity.inicioFragment);
             transition.commit();
         }
     }
