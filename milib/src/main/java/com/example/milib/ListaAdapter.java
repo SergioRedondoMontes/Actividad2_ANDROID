@@ -6,11 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by sergioredondo on 3/12/17.
  */
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
+
+    private ArrayList<String> listaC;
+
+    public ListaAdapter(ArrayList<String> listaC){
+        this.listaC=listaC;
+    }
 
     @Override
     public ListaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -22,13 +30,13 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
 
     @Override
     public void onBindViewHolder(ListaViewHolder holder, int position) {
-        holder.textoC.setText("POSICION" + position);
+        holder.textoC.setText(listaC.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return listaC.size();
     }
 }
 
@@ -40,5 +48,6 @@ class ListaViewHolder extends RecyclerView.ViewHolder{
 
     public ListaViewHolder(View itemView) {
         super(itemView);
+        textoC=itemView.findViewById(R.id.textoC);
     }
 }

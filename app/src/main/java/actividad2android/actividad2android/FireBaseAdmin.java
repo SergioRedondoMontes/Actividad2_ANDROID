@@ -54,14 +54,14 @@ public class FireBaseAdmin {
                             //Log.d(TAG, "createUserWithEmail:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
-                            FireBaseAdmin.this.listener.fireBaseAdminUserConnected(true);
+                            FireBaseAdmin.this.listener.fireBaseAdminUserRegister(true);
 
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                             //        Toast.LENGTH_SHORT).show();
-                            FireBaseAdmin.this.listener.fireBaseAdminUserConnected(false);
+                            FireBaseAdmin.this.listener.fireBaseAdminUserRegister(false);
                         }
 
                         // ...
@@ -70,7 +70,7 @@ public class FireBaseAdmin {
     }
 
 
-    public void signIn(String email, String password,Activity activity) {
+    public void login(String email, String password,Activity activity) {
 
         System.out.println(password+"-----------------------------------"+ email);
         mAuth.signInWithEmailAndPassword(email, password)
@@ -80,10 +80,10 @@ public class FireBaseAdmin {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            FireBaseAdmin.this.listener.fireBaseAdminUserRegister(true);
+                            FireBaseAdmin.this.listener.fireBaseAdminUserLogin(true);
                         } else {
                             // If sign in fails, display a message to the user.
-                            FireBaseAdmin.this.listener.fireBaseAdminUserRegister(false);
+                            FireBaseAdmin.this.listener.fireBaseAdminUserLogin(false);
                         }
 
                         // ...
@@ -108,7 +108,8 @@ public class FireBaseAdmin {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-
+                listener.fireBaseDataRecive(rama,null);
+                Log.v("onCancelled",rama+"......");
             }
         });
 
@@ -117,8 +118,8 @@ public class FireBaseAdmin {
 
     public interface FireBaseAdminListener{
 
-        public void fireBaseAdminUserConnected(boolean blconnected);
         public void fireBaseAdminUserRegister(boolean blconnected);
+        public void fireBaseAdminUserLogin(boolean blconnected);
         public void fireBaseDataRecive( String rama,DataSnapshot dataSnapshot);
 
     }

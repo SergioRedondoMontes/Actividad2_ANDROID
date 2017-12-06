@@ -7,8 +7,10 @@
     tools:context="actividad2android.actividad2android.GeneralActivity">
 
     <fragment
-        android:id="@+id/fragment3"
-        android:name="com.example.milib.fragments.InicioFragment"
+        android:id="@+id/fragmentlista"
+        android:name="com.example.milib.fragments.ListaFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -17,4 +19,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

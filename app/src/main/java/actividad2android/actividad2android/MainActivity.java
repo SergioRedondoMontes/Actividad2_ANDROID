@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         DataHolder.instance.fireBaseAdmin=new FireBaseAdmin();
         DataHolder.instance.fireBaseAdmin.setListener(mainActivityEvents);
+
+        DataHolder.instance.fireBaseAdmin.login("a@a.com","123456",this);
     }
 }
 class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListener,FireBaseAdmin.FireBaseAdminListener{
@@ -66,7 +68,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
 
     @Override
     public void OnLoginClicked() {
-        DataHolder.instance.fireBaseAdmin.signIn(mainActivity.loginFragment.txtEmail.getText().toString(),
+        DataHolder.instance.fireBaseAdmin.login(mainActivity.loginFragment.txtEmail.getText().toString(),
                 mainActivity.loginFragment.txtPass.getText().toString(),mainActivity);
 
     }
@@ -88,7 +90,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     }
 
     @Override
-    public void fireBaseAdminUserConnected(boolean blconnected) {
+    public void fireBaseAdminUserLogin(boolean blconnected) {
         System.out.println("-----------------------------------"+ blconnected);
         if (blconnected){
             Intent intent = new Intent(mainActivity,GeneralActivity.class);
@@ -110,7 +112,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
         if (blconnected) {
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
             transition.hide(this.mainActivity.registerFragment);
-            transition.hide(this.mainActivity.loginFragment);
+            transition.show(this.mainActivity.loginFragment);
            // transition.show(this.mainActivity.inicioFragment);
             transition.commit();
         }

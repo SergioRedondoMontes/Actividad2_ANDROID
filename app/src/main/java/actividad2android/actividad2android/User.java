@@ -7,17 +7,17 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 @IgnoreExtraProperties
 public class User {
-    public String username;
-    public String email;
+    public String nombre;
+    public String apellido;
+    public String correo;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String username, String email) {
-        this.username = username;
-        this.email = email;
+    public User(String nombre, String apellido, String correo) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
     }
-
-
 }

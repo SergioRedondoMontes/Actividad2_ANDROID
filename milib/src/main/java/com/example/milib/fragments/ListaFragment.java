@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.example.milib.ListaAdapter;
 import com.example.milib.R;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -31,10 +33,17 @@ public class ListaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lista, container, false);
-        recyclerView.findViewById(R.id.listaR);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        ListaAdapter listaAdapter = new ListaAdapter();
+        recyclerView = v.findViewById(R.id.listaR);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+
+        ArrayList<String> mDatos = new ArrayList<>();
+        mDatos.add("bocadillo");
+        mDatos.add("sandwich");
+        mDatos.add("hamburguesa");
+
+        ListaAdapter listaAdapter = new ListaAdapter(mDatos);
         recyclerView.setAdapter(listaAdapter);
+
 
 
         return v;
