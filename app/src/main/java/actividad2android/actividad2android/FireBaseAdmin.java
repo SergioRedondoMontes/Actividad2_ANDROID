@@ -70,7 +70,7 @@ public class FireBaseAdmin {
     }
 
 
-    public void login(String email, String password,Activity activity) {
+    public void login(final String email, String password, Activity activity) {
 
         System.out.println(password+"-----------------------------------"+ email);
         mAuth.signInWithEmailAndPassword(email, password)
@@ -79,10 +79,12 @@ public class FireBaseAdmin {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            Log.v("login","BIEEEEN");
                             FirebaseUser user = mAuth.getCurrentUser();
                             FireBaseAdmin.this.listener.fireBaseAdminUserLogin(true);
                         } else {
                             // If sign in fails, display a message to the user.
+                            Log.v("login","MAAAAAAAL"+email);
                             FireBaseAdmin.this.listener.fireBaseAdminUserLogin(false);
                         }
 

@@ -1,4 +1,4 @@
-package com.example.milib;
+package actividad2android.actividad2android;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
 
-    private ArrayList<String> listaC;
+    private ArrayList<User> listaC;
 
-    public ListaAdapter(ArrayList<String> listaC){
+    public ListaAdapter(ArrayList<User> listaC){
         this.listaC=listaC;
     }
 
@@ -30,8 +30,9 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
 
     @Override
     public void onBindViewHolder(ListaViewHolder holder, int position) {
-        holder.textoC.setText(listaC.get(position));
-
+        holder.textoC.setText(listaC.get(position).correo);
+        holder.textoNombre.setText(listaC.get(position).nombre);
+        holder.textoApellido.setText(listaC.get(position).apellido);
     }
 
     @Override
@@ -44,10 +45,14 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
 class ListaViewHolder extends RecyclerView.ViewHolder{
 
     public TextView textoC;
+    public TextView textoNombre;
+    public TextView textoApellido;
 
 
     public ListaViewHolder(View itemView) {
         super(itemView);
         textoC=itemView.findViewById(R.id.textoC);
+        textoNombre=itemView.findViewById(R.id.textoNombre);
+        textoApellido=itemView.findViewById(R.id.textoApellido);
     }
 }

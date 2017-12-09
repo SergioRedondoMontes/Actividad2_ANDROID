@@ -14,8 +14,6 @@ public class DataHolder {
 
     }
 
-    static public String email = "sergio@gmail.com";
-    static public String pass = "1234";
 
     public FireBaseAdmin fireBaseAdmin;
 

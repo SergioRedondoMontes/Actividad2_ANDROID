@@ -1,20 +1,15 @@
 package actividad2android.actividad2android;
 
-import android.content.Intent;
+
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.example.milib.fragments.InicioFragment;
 import com.example.milib.fragments.LoginFragment;
 import com.example.milib.fragments.LoginFragmentListener;
 import com.example.milib.fragments.RegisterFragment;
 import com.example.milib.fragments.RegisterFragmentListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-
-import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         DataHolder.instance.fireBaseAdmin=new FireBaseAdmin();
         DataHolder.instance.fireBaseAdmin.setListener(mainActivityEvents);
 
-        DataHolder.instance.fireBaseAdmin.login("a@a.com","123456",this);
+        DataHolder.instance.fireBaseAdmin.login("a@a.com","12345678",this);
     }
 }
 class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListener,FireBaseAdmin.FireBaseAdminListener{
@@ -68,6 +63,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
 
     @Override
     public void OnLoginClicked() {
+        if (mainActivity.loginFragment.txtEmail.getText().toString()!=null && mainActivity.loginFragment.txtPass.getText().toString()!=null)
         DataHolder.instance.fireBaseAdmin.login(mainActivity.loginFragment.txtEmail.getText().toString(),
                 mainActivity.loginFragment.txtPass.getText().toString(),mainActivity);
 
@@ -85,6 +81,7 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     @Override
     public void OnSaveClicked() {
         System.out.println("-------------Intentando REGISTRAR");
+        if (mainActivity.registerFragment.txtEmail.getText().toString()!=null &&  mainActivity.registerFragment.txtPass.getText().toString()!=null)
         DataHolder.instance.fireBaseAdmin.loginWithEmailPass(mainActivity.registerFragment.txtEmail.getText().toString(),
                 mainActivity.registerFragment.txtPass.getText().toString(),mainActivity);
     }
