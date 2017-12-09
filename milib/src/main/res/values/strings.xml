@@ -4,6 +4,8 @@
     <string name="btnRegister">REGISTER</string>
     <string name="lblEmail">EMAIL</string>
     <string name="lblPass">PASSWORD</string>
+    <string name="lblNombre">NOMBRE</string>
+    <string name="lblApellido">APELLIDO</string>
     <string name="btnSave">SAVE</string>
     <string name="btnBack">BACK</string>
 

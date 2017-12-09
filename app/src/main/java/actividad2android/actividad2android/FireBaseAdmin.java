@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FireBaseAdmin {
     private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
+    public FirebaseUser currentUser;
     FirebaseDatabase database;
     DatabaseReference myRef;
     //Activity activity;
@@ -116,6 +116,17 @@ public class FireBaseAdmin {
         });
 
     }
+
+
+    public void writeNewUser(String userId, String nombre, String apellido, String email) {
+        initData();
+        User user = new User(nombre, apellido, email);
+        Log.v("writeNewUser",user.nombre+" "+user.apellido+" "+user.correo+"---"+userId);
+        DatabaseReference refTemp = myRef.child("user");
+        refTemp.child(userId).setValue(user);
+
+    }
+
 
 
     public interface FireBaseAdminListener{

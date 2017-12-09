@@ -13,7 +13,9 @@ public class DataHolder {
     public DataHolder(){
 
     }
-
+    public String emailReg;
+    public String nombreReg;
+    public String apellidoReg;
 
     public FireBaseAdmin fireBaseAdmin;
 

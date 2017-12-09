@@ -18,8 +18,8 @@ import com.example.milib.R;
 public class RegisterFragment extends Fragment {
 
     Button btnSave,btnBack;
-    TextView lblEmail,lblPass;
-    public EditText txtEmail,txtPass;
+    TextView lblNombre, lblApellido, lblEmail,lblPass;
+    public EditText txtNombre, txtApellido, txtEmail,txtPass;
     RegisterFragmentEvents events;
     public RegisterFragmentListener listener;
 
@@ -53,9 +53,15 @@ public class RegisterFragment extends Fragment {
         lblEmail.setText(R.string.lblEmail);
         lblPass = v.findViewById(R.id.lblPass);
         lblPass.setText(R.string.lblPass);
+        lblNombre = v.findViewById(R.id.lblNombre);
+        lblNombre.setText(R.string.lblNombre);
+        lblApellido = v.findViewById(R.id.lblApellido);
+        lblApellido.setText(R.string.lblApellido);
 
         txtEmail = v.findViewById(R.id.txtEmail);
         txtPass = v.findViewById(R.id.txtPass);
+        txtNombre = v.findViewById(R.id.txtNombre);
+        txtApellido = v.findViewById(R.id.txtApellido);
 
         return v;
     }

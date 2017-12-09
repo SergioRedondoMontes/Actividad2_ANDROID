@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.example.milib.fragments.LoginFragment;
 import com.example.milib.fragments.LoginFragmentListener;
 import com.example.milib.fragments.RegisterFragment;
@@ -91,6 +93,15 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     public void fireBaseAdminUserLogin(boolean blconnected) {
         System.out.println("-----------------------------------"+ blconnected);
         if (blconnected){
+            /*creo que puedo hacerlo de otra manera
+            Log.v("dataholder",DataHolder.instance.emailReg);
+            Log.v("dataholder",DataHolder.instance.fireBaseAdmin.currentUser.getEmail());
+            if (DataHolder.instance.fireBaseAdmin.currentUser.getEmail().equals(DataHolder.instance.emailReg)){
+            DataHolder.instance.fireBaseAdmin.writeNewUser(DataHolder.instance.fireBaseAdmin.currentUser.getUid(),
+                    DataHolder.instance.nombreReg,
+                    DataHolder.instance.apellidoReg,
+                    DataHolder.instance.emailReg);
+            }*/
             Intent intent = new Intent(mainActivity,GeneralActivity.class);
             mainActivity.startActivity(intent);
             mainActivity.finish();
@@ -108,6 +119,19 @@ class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListen
     public void fireBaseAdminUserRegister(boolean blconnected) {
         System.out.println("-----------------------------------"+ blconnected);
         if (blconnected) {
+            //insertar usuario en BBDD
+            DataHolder.instance.fireBaseAdmin.writeNewUser(DataHolder.instance.fireBaseAdmin.currentUser.getUid(),
+                    mainActivity.registerFragment.txtNombre.getText().toString(),
+                    mainActivity.registerFragment.txtApellido.getText().toString(),
+                    mainActivity.registerFragment.txtEmail.getText().toString());
+            /*
+            DataHolder.instance.nombreReg = mainActivity.registerFragment.txtNombre.getText().toString();
+            DataHolder.instance.apellidoReg = mainActivity.registerFragment.txtApellido.getText().toString();
+            DataHolder.instance.emailReg = mainActivity.registerFragment.txtEmail.getText().toString();
+            Log.v("dataholder",DataHolder.instance.nombreReg);
+            Log.v("dataholder",DataHolder.instance.apellidoReg);
+            Log.v("dataholder",DataHolder.instance.emailReg);
+*/
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
             transition.hide(this.mainActivity.registerFragment);
             transition.show(this.mainActivity.loginFragment);
