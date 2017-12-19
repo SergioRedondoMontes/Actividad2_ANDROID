@@ -15,6 +15,11 @@ import java.util.ArrayList;
 public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
 
     private ArrayList<User> listaC;
+    public ListaAdapterListener listener;
+
+    public void setListener(ListaAdapterListener listener){
+        this.listener=listener;
+    }
 
     public ListaAdapter(ArrayList<User> listaC){
         this.listaC=listaC;
@@ -33,6 +38,8 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
         holder.textoC.setText(listaC.get(position).correo);
         holder.textoNombre.setText(listaC.get(position).nombre);
         holder.textoApellido.setText(listaC.get(position).apellido);
+        holder.setListaAdapterListener(listener);
+        holder.setPosicion(position);
     }
 
     @Override
@@ -42,11 +49,14 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaViewHolder> {
 }
 
 
-class ListaViewHolder extends RecyclerView.ViewHolder{
+class ListaViewHolder extends RecyclerView.ViewHolder {
 
     public TextView textoC;
     public TextView textoNombre;
     public TextView textoApellido;
+    ListaViewHolderEvents events;
+    public ListaAdapterListener listaAdapterListener;
+    public int posicion=-1;
 
 
     public ListaViewHolder(View itemView) {
@@ -54,5 +64,29 @@ class ListaViewHolder extends RecyclerView.ViewHolder{
         textoC=itemView.findViewById(R.id.textoC);
         textoNombre=itemView.findViewById(R.id.textoNombre);
         textoApellido=itemView.findViewById(R.id.textoApellido);
+        events = new ListaViewHolderEvents(this);
+        itemView.setOnClickListener(events);
+    }
+
+    public void setListaAdapterListener(ListaAdapterListener listaAdapterListener) {
+        this.listaAdapterListener = listaAdapterListener;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+}
+
+class ListaViewHolderEvents implements View.OnClickListener{
+    ListaViewHolder viewHolder;
+
+    public ListaViewHolderEvents(ListaViewHolder listaViewHolder){
+        this.viewHolder=listaViewHolder;
+    }
+
+    @Override
+    public void onClick(View view) {
+        viewHolder.listaAdapterListener.ListaAdapterCellClick(viewHolder,viewHolder.posicion);
+
     }
 }

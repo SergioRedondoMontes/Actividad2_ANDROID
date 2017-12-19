@@ -4,6 +4,7 @@ package actividad2android.actividad2android;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.milib.fragments.ListaFragment;
@@ -44,7 +45,7 @@ public class GeneralActivity extends AppCompatActivity {
 
 }
 
-class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener{
+class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,ListaAdapterListener{
 
     GeneralActivity generalActivity;
 
@@ -67,6 +68,7 @@ class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener{
         Map<String,User> hashUsers= dataSnapshot.getValue(indicator);
         Log.v("general","contiene"+hashUsers);
         ListaAdapter listaAdapter = new ListaAdapter(new ArrayList<User>(hashUsers.values()));
+        listaAdapter.setListener(this);
         generalActivity.listaFragment.recyclerView.setAdapter(listaAdapter);
     }
 
@@ -83,4 +85,8 @@ class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener{
     }
 
 
+    @Override
+    public void ListaAdapterCellClick(ListaViewHolder cell,int posicion) {
+
+    }
 }
