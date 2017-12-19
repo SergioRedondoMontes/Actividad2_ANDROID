@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">examen</string>
+    <string name="icon_user">&#xf007;</string>
+    <string name="logOut">LOGOUT</string>
 </resources>
