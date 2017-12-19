@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class GeneralActivity extends AppCompatActivity {
     public ListaFragment listaFragment;
+    public DatosFragment datosFragment;
     public Button btnLogOut;
 
     @Override
@@ -33,8 +34,10 @@ public class GeneralActivity extends AppCompatActivity {
 
         //muestra el fragment que contiene la lista
         listaFragment = (ListaFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentlista);
+        datosFragment = (DatosFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentDatos);
         FragmentTransaction transition = getSupportFragmentManager().beginTransaction();
         transition.show(listaFragment);
+        transition.hide(datosFragment);
         transition.commit();
 
 
@@ -51,6 +54,7 @@ public class GeneralActivity extends AppCompatActivity {
 class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,ListaAdapterListener {
 
     GeneralActivity generalActivity;
+    ListaAdapter listaAdapter;
 
 
     public GeneralActivityEventes(GeneralActivity generalActivity){
@@ -78,7 +82,7 @@ class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,List
         GenericTypeIndicator<Map<String,User>> indicator = new GenericTypeIndicator<Map<String,User>>(){};
         Map<String,User> hashUsers= dataSnapshot.getValue(indicator);
         Log.v("general","contiene"+hashUsers);
-        ListaAdapter listaAdapter = new ListaAdapter(new ArrayList<User>(hashUsers.values()));
+        listaAdapter = new ListaAdapter(new ArrayList<User>(hashUsers.values()));
         listaAdapter.setListener(this);
         generalActivity.listaFragment.recyclerView.setAdapter(listaAdapter);
     }
@@ -86,6 +90,14 @@ class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,List
     @Override
     public void ListaAdapterCellClick(ListaViewHolder cell, int posicion) {
         Log.v("ListaAdapterCellClick",posicion+"");
+        generalActivity.datosFragment.txtNombre.setText(cell.textoNombre.getText().toString());
+        generalActivity.datosFragment.txtApellido.setText(cell.textoApellido.getText().toString());
+        generalActivity.datosFragment.txtEmail.setText(cell.textoC.getText().toString());
+
+        FragmentTransaction transition = generalActivity.getSupportFragmentManager().beginTransaction();
+        transition.hide(generalActivity.listaFragment);
+        transition.show(generalActivity.datosFragment);
+        transition.commit();
 
     }
 }

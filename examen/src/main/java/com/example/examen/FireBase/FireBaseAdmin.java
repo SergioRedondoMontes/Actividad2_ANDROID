@@ -93,6 +93,10 @@ public class FireBaseAdmin {
 
     }
 
+    public void singOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
 
     public void descargarObservarRamaBBDD(final String rama){
         // Read from the database
