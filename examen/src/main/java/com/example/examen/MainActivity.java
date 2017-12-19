@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         DataHolder.instance.fireBaseAdmin.setListener(mainActivityEvents);
 
         //descomentar para entrar automaticamente
-        DataHolder.instance.fireBaseAdmin.login("a@a.com","12345678",this);
+        //DataHolder.instance.fireBaseAdmin.login("a@a.com","12345678",this);
     }
 }
 class MainActivityEvents implements LoginFragmentListener,RegisterFragmentListener,FireBaseAdmin.FireBaseAdminListener {

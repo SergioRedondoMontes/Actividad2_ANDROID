@@ -1,9 +1,11 @@
 package com.example.examen;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.examen.DataHolder.DataHolder;
@@ -29,20 +31,22 @@ public class GeneralActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_general);
 
-        btnLogOut = this.findViewById(R.id.btnLogOut);
-        btnLogOut.setText(R.string.logOut);
+        GeneralActivityEventes events = new GeneralActivityEventes(this);
+        DataHolder.instance.fireBaseAdmin.setListener(events);
+
 
         //muestra el fragment que contiene la lista
         listaFragment = (ListaFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentlista);
         datosFragment = (DatosFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentDatos);
+        datosFragment.setListener(events);
         FragmentTransaction transition = getSupportFragmentManager().beginTransaction();
         transition.show(listaFragment);
         transition.hide(datosFragment);
         transition.commit();
 
-
-        GeneralActivityEventes events = new GeneralActivityEventes(this);
-        DataHolder.instance.fireBaseAdmin.setListener(events);
+        btnLogOut = this.findViewById(R.id.btnLogOut);
+        btnLogOut.setText(R.string.logOut);
+        btnLogOut.setOnClickListener(events);
 
         //decimos dese que rama vamos a observar
         DataHolder.instance.fireBaseAdmin.descargarObservarRamaBBDD("user");
@@ -51,7 +55,7 @@ public class GeneralActivity extends AppCompatActivity {
 
 }
 
-class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,ListaAdapterListener {
+class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,ListaAdapterListener,DatosFragmentListener,View.OnClickListener {
 
     GeneralActivity generalActivity;
     ListaAdapter listaAdapter;
@@ -99,5 +103,25 @@ class GeneralActivityEventes implements FireBaseAdmin.FireBaseAdminListener,List
         transition.show(generalActivity.datosFragment);
         transition.commit();
 
+    }
+
+    @Override
+    public void OnBackClicked() {
+        FragmentTransaction transition = generalActivity.getSupportFragmentManager().beginTransaction();
+        transition.show(generalActivity.listaFragment);
+        transition.hide(generalActivity.datosFragment);
+        transition.commit();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        Log.v("onClick","LOGOUT");
+        if (view.getId()==R.id.btnLogOut) {
+            DataHolder.instance.fireBaseAdmin.singOut();
+            Intent intent = new Intent(generalActivity, MainActivity.class);
+            generalActivity.startActivity(intent);
+            generalActivity.finish();
+        }
     }
 }
