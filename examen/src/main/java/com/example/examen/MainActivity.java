@@ -99,12 +99,22 @@ la clase FireBaseAdmin que hace el registro
     }
 
     /*
-    @fireBaseAdminUserRegiste si el metodo de FireBaseAdmin @FireBaseAdmin.register ha funcionado correctamente hace la transicion
+    @fireBaseAdminUserRegiste si el metodo de FireBaseAdmin @FireBaseAdmin.register ha funcionado correctamente inserta el nuevo usuario
+      y hace la transicion
      */
     @Override
     public void fireBaseAdminUserRegister(boolean blconnected) {
         Log.v("fireBaseRegister",""+blconnected);
         if (blconnected) {
+
+            //insertar usuario en BBDD
+            DataHolder.instance.fireBaseAdmin.writeNewUser(DataHolder.instance.fireBaseAdmin.currentUser.getUid(),
+                    mainActivity.registerFragment.txtNombre.getText().toString(),
+                    mainActivity.registerFragment.txtApellido.getText().toString(),
+                    mainActivity.registerFragment.txtEmail.getText().toString());
+
+
+            //transicion
             FragmentTransaction transition = this.mainActivity.getSupportFragmentManager().beginTransaction();
             transition.hide(this.mainActivity.registerFragment);
             transition.show(this.mainActivity.loginFragment);

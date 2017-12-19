@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.examen.User.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -117,12 +118,12 @@ public class FireBaseAdmin {
 
 
     public void writeNewUser(String userId, String nombre, String apellido, String email) {
-        /*initData();
+        initData();
         User user = new User(nombre, apellido, email);
         Log.v("writeNewUser",user.nombre+" "+user.apellido+" "+user.correo+"---"+userId);
         DatabaseReference refTemp = myRef.child("user");
         refTemp.child(userId).setValue(user);
-        */
+
     }
 
 
