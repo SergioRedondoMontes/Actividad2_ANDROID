@@ -56,7 +56,7 @@ public class FireBaseAdmin {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Log.v("register", "createUserWithEmail:failure", task.getException());
                             //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                             //        Toast.LENGTH_SHORT).show();
                             FireBaseAdmin.this.listener.fireBaseAdminUserRegister(false);
