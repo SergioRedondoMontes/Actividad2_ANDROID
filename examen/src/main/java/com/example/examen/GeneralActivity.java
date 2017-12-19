@@ -3,7 +3,7 @@ package com.example.examen;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class generalActivity extends AppCompatActivity {
+public class GeneralActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
